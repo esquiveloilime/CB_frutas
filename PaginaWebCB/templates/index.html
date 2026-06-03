@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>AutoCobro Inteligente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>AutoCobro Inteligente</h1>
+    <p>Reconocimiento de frutas mediante red neuronal convolucional</p>
+</header>
+
+<main>
+    <section class="camera-section">
+        <h2>Cámara</h2>
+
+        <video id="video" autoplay></video>
+        <canvas id="canvas" hidden></canvas>
+
+        <button id="btnAnalizar">Analizar fruta</button>
+    </section>
+
+    <section class="results-section">
+        <h2>Posibles frutas detectadas</h2>
+        <div id="resultados"></div>
+    </section>
+
+    <section class="info-section">
+        <h2>Fruta seleccionada</h2>
+        <div id="frutaSeleccionada">
+            <p>Selecciona una fruta de los resultados.</p>
+        </div>
+    </section>
+</main>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
