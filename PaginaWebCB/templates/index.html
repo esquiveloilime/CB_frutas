@@ -9,28 +9,52 @@
 
 <header>
     <h1>AutoCobro Inteligente</h1>
-    <p>Reconocimiento de frutas mediante red neuronal convolucional</p>
+    <p>Reconocimiento de frutas mediante CNN</p>
 </header>
 
 <main>
     <section class="camera-section">
-        <h2>Cámara</h2>
+        <h2>Cámara de autocobro</h2>
 
-        <video id="video" autoplay></video>
+        <div class="camera-wrapper">
+            <video id="video" autoplay playsinline></video>
+
+            <div class="guide-box">
+                <span>Coloca la fruta aquí</span>
+            </div>
+        </div>
+
         <canvas id="canvas" hidden></canvas>
 
         <button id="btnAnalizar">Analizar fruta</button>
+
+        <p class="hint">
+            Coloca una fruta dentro del recuadro y presiona analizar.
+        </p>
     </section>
 
     <section class="results-section">
-        <h2>Posibles frutas detectadas</h2>
-        <div id="resultados"></div>
+        <h2>Top 5 predicciones</h2>
+        <div id="resultados">
+            <p>Aún no se ha analizado ninguna fruta.</p>
+        </div>
     </section>
 
     <section class="info-section">
-        <h2>Fruta seleccionada</h2>
+        <h2>Producto seleccionado</h2>
+
         <div id="frutaSeleccionada">
             <p>Selecciona una fruta de los resultados.</p>
+        </div>
+
+        <div class="peso-box">
+            <label for="peso">Peso en kg:</label>
+            <input type="number" id="peso" min="0" step="0.01" placeholder="Ej. 1.25">
+            <button id="btnCalcular">Calcular total</button>
+        </div>
+
+        <div id="totalBox">
+            <p>Total: $0.00</p>
         </div>
     </section>
 </main>

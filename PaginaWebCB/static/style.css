@@ -12,32 +12,67 @@ body {
 header {
     background: #1f7a4d;
     color: white;
-    padding: 24px;
     text-align: center;
+    padding: 24px;
+}
+
+header h1 {
+    margin: 0;
 }
 
 main {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.1fr 0.9fr;
     gap: 24px;
     padding: 24px;
 }
 
 section {
     background: white;
-    border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
 }
 
 .camera-section {
     grid-row: span 2;
 }
 
+.camera-wrapper {
+    position: relative;
+    width: 100%;
+    background: black;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
 video {
     width: 100%;
-    border-radius: 12px;
-    background: #000;
+    display: block;
+}
+
+.guide-box {
+    position: absolute;
+    width: 55%;
+    aspect-ratio: 1 / 1;
+    border: 4px dashed #ffffff;
+    border-radius: 18px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.guide-box span {
+    position: absolute;
+    bottom: -34px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.75);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    white-space: nowrap;
 }
 
 button {
@@ -45,7 +80,7 @@ button {
     color: white;
     border: none;
     padding: 12px 18px;
-    margin-top: 12px;
+    margin-top: 14px;
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
@@ -55,26 +90,72 @@ button:hover {
     background: #155a38;
 }
 
+.hint {
+    color: #555;
+    font-size: 14px;
+}
+
 .resultado-card {
     border: 1px solid #ddd;
     padding: 14px;
-    border-radius: 10px;
+    border-radius: 12px;
     margin-bottom: 12px;
     background: #fafafa;
 }
 
+.resultado-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rank {
+    background: #1f7a4d;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: bold;
+}
+
 .resultado-card h3 {
-    margin-top: 0;
+    margin: 0;
 }
 
 #frutaSeleccionada {
     background: #f0fff6;
     border: 1px solid #b8e6c8;
     padding: 16px;
-    border-radius: 10px;
+    border-radius: 12px;
+    min-height: 100px;
 }
 
-@media (max-width: 800px) {
+.peso-box {
+    margin-top: 18px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+#totalBox {
+    margin-top: 16px;
+    background: #fff8e1;
+    border: 1px solid #f3d27a;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 18px;
+}
+
+.error {
+    color: #b00020;
+    font-weight: bold;
+}
+
+@media (max-width: 900px) {
     main {
         grid-template-columns: 1fr;
     }

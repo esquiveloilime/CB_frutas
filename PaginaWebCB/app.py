@@ -1,7 +1,6 @@
 import base64
 import io
 import os
-
 import numpy as np
 import tensorflow as tf
 from flask import Flask, render_template, request, jsonify
@@ -10,87 +9,58 @@ from PIL import Image
 app = Flask(__name__)
 
 IMG_SIZE = 100
-MODEL_PATH = "modelo/mejor_modelo.keras"
-CLASSES_PATH = "modelo/clases.txt"
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODELO_ACTIVO = "modelo2"
+
+MODEL_PATH = os.path.join(
+    BASE_DIR,
+    "..",
+    "redneuronal",
+    MODELO_ACTIVO,
+    "mejor_modelo.keras"
+)
+
+CLASSES_PATH = os.path.join(
+    BASE_DIR,
+    "..",
+    "redneuronal",
+    MODELO_ACTIVO,
+    "clases.txt"
+)
 model = tf.keras.models.load_model(MODEL_PATH)
+print("Modelo:", MODEL_PATH)
+print("Clases:", CLASSES_PATH)
+print("Existe modelo:", os.path.exists(MODEL_PATH))
+print("Existe clases:", os.path.exists(CLASSES_PATH))
 
 with open(CLASSES_PATH, "r", encoding="utf-8") as f:
-    class_names = [line.strip() for line in f.readlines()]
+    class_names = [line.strip() for line in f.readlines() if line.strip()]
 
+print("Clases cargadas:", class_names)
+print("Número de clases:", len(class_names))
+print("Salidas del modelo:", model.output_shape[-1])
 
 frutas_info = {
-    "manzana": {
-        "precio": 42.90,
-        "unidad": "kg",
-        "descripcion": "La manzana es rica en fibra y antioxidantes."
-    },
-    "platano": {
-        "precio": 24.90,
-        "unidad": "kg",
-        "descripcion": "El plátano aporta potasio y energía."
-    },
-    "naranja": {
-        "precio": 29.90,
-        "unidad": "kg",
-        "descripcion": "La naranja contiene vitamina C."
-    },
-    "limon": {
-        "precio": 34.90,
-        "unidad": "kg",
-        "descripcion": "El limón es usado por su acidez y vitamina C."
-    },
-    "pepino": {
-        "precio": 26.90,
-        "unidad": "kg",
-        "descripcion": "El pepino tiene alto contenido de agua."
-    },
-    "durazno": {
-        "precio": 59.90,
-        "unidad": "kg",
-        "descripcion": "El durazno contiene vitaminas A y C."
-    },
-    "kiwi": {
-        "precio": 89.90,
-        "unidad": "kg",
-        "descripcion": "El kiwi es rico en vitamina C y fibra."
-    },
-    "sandia": {
-        "precio": 18.90,
-        "unidad": "kg",
-        "descripcion": "La sandía es refrescante y contiene mucha agua."
-    },
-    "pina": {
-        "precio": 32.90,
-        "unidad": "kg",
-        "descripcion": "La piña contiene bromelina y vitamina C."
-    },
-    "papaya": {
-        "precio": 27.90,
-        "unidad": "kg",
-        "descripcion": "La papaya favorece la digestión."
-    },
-    "mango": {
-        "precio": 45.90,
-        "unidad": "kg",
-        "descripcion": "El mango contiene vitaminas A y C."
-    },
-    "melon": {
-        "precio": 25.90,
-        "unidad": "kg",
-        "descripcion": "El melón es hidratante y ligero."
-    },
-    "guayaba": {
-        "precio": 49.90,
-        "unidad": "kg",
-        "descripcion": "La guayaba es rica en vitamina C."
-    }
+    "manzana": {"precio": 42.90, "unidad": "kg", "descripcion": "Rica en fibra y antioxidantes."},
+    "platano": {"precio": 24.90, "unidad": "kg", "descripcion": "Aporta potasio y energía."},
+    "naranja": {"precio": 29.90, "unidad": "kg", "descripcion": "Fuente de vitamina C."},
+    "limon": {"precio": 34.90, "unidad": "kg", "descripcion": "Aporta vitamina C y acidez natural."},
+    "pepino": {"precio": 26.90, "unidad": "kg", "descripcion": "Alto contenido de agua."},
+    "durazno": {"precio": 59.90, "unidad": "kg", "descripcion": "Contiene vitaminas A y C."},
+    "kiwi": {"precio": 89.90, "unidad": "kg", "descripcion": "Rico en vitamina C y fibra."},
+    "sandia": {"precio": 18.90, "unidad": "kg", "descripcion": "Refrescante y alta en agua."},
+    "pina": {"precio": 32.90, "unidad": "kg", "descripcion": "Contiene vitamina C y bromelina."},
+    "papaya": {"precio": 27.90, "unidad": "kg", "descripcion": "Favorece la digestión."},
+    "mango": {"precio": 45.90, "unidad": "kg", "descripcion": "Contiene vitaminas A y C."},
+    "melon": {"precio": 25.90, "unidad": "kg", "descripcion": "Hidratante y ligero."},
+    "guayaba": {"precio": 49.90, "unidad": "kg", "descripcion": "Muy rica en vitamina C."}
 }
 
 
 @app.route("/")
 def index():
-    return render_template("index.html", frutas_info=frutas_info)
+    return render_template("index.html")
 
 
 @app.route("/predecir", methods=["POST"])
@@ -110,6 +80,15 @@ def predecir():
     img_array = np.expand_dims(img_array, axis=0)
 
     predicciones = model.predict(img_array)[0]
+
+    cantidad_salidas = len(predicciones)
+
+    if cantidad_salidas != len(class_names):
+        return jsonify({
+            "error": "El número de clases no coincide con la salida del modelo.",
+            "salidas_modelo": cantidad_salidas,
+            "clases_txt": len(class_names)
+        }), 500
 
     top_5_indices = np.argsort(predicciones)[-5:][::-1]
 
