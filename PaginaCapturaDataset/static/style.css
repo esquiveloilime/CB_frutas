@@ -1,0 +1,112 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #f4f6f8;
+    color: #222;
+}
+
+header {
+    background: #1f7a4d;
+    color: white;
+    padding: 24px;
+    text-align: center;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+    gap: 24px;
+    padding: 24px;
+}
+
+.panel {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 18px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.camera-wrapper {
+    position: relative;
+    width: 100%;
+    background: black;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+video {
+    width: 100%;
+    display: block;
+}
+
+.guide-box {
+    position: absolute;
+    width: 55%;
+    aspect-ratio: 1 / 1;
+    border: 4px dashed white;
+    border-radius: 18px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.guide-box span {
+    position: absolute;
+    bottom: -34px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.75);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+button {
+    background: #1f7a4d;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    margin-top: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #155a38;
+}
+
+#mensaje {
+    margin-top: 14px;
+    font-weight: bold;
+}
+
+#preview {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border: 3px solid #1f7a4d;
+    border-radius: 12px;
+    background: #eee;
+}
+
+@media (max-width: 900px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+}

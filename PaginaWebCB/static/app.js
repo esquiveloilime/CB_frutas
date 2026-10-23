@@ -6,6 +6,10 @@ const frutaSeleccionadaDiv = document.getElementById("frutaSeleccionada");
 const pesoInput = document.getElementById("peso");
 const btnCalcular = document.getElementById("btnCalcular");
 const totalBox = document.getElementById("totalBox");
+const previewCNN = document.getElementById("previewCNN");
+const previewCNN100 =
+    document.getElementById("previewCNN100");
+
 
 let frutaActual = null;
 
@@ -50,6 +54,7 @@ btnAnalizar.addEventListener("click", async () => {
     );
 
     const imagenBase64 = canvas.toDataURL("image/jpeg");
+    previewCNN.src = imagenBase64;
 
     resultadosDiv.innerHTML = "<p>Analizando imagen...</p>";
 
@@ -63,6 +68,7 @@ btnAnalizar.addEventListener("click", async () => {
         });
 
         const data = await response.json();
+        previewCNN100.src = data.preview_cnn;
 
         if (data.error) {
             resultadosDiv.innerHTML = `<p class="error">${data.error}</p>`;

@@ -160,3 +160,32 @@ input {
         grid-template-columns: 1fr;
     }
 }
+.preview-box {
+    margin-top: 18px;
+    background: #f7f7f7;
+    border: 1px solid #ddd;
+    padding: 14px;
+    border-radius: 12px;
+}
+
+.preview-box img {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border: 2px solid #1f7a4d;
+    border-radius: 10px;
+    background: white;
+}
+.preview-cnn-box {
+    margin-top: 20px;
+}
+
+.preview-cnn-box img {
+    width: 250px;
+    height: 250px;
+
+    image-rendering: pixelated;
+
+    border: 3px solid #1f7a4d;
+    border-radius: 12px;
+}

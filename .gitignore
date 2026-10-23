@@ -1,20 +1,23 @@
 # Entorno virtual
 .venv/
+venv/
 
 # Python
 __pycache__/
 *.pyc
 
-# Dataset
-dataset_frutas/
+# Datasets
 fruits-360-100x100/
+datasetv*/
+dataset_frutas/
+fotos_reales/
 
-# Modelo entrenado
-modelo/*.keras
-
-# VS Code
+# Archivos temporales
 .vscode/
-
-# Sistema
 .DS_Store
-Thumbs.db
+
+# Ignorar modelos anteriores
+*.keras
+
+# Permitir el modelo V4
+!redneuronal/modelo4/mejor_modelo.keras

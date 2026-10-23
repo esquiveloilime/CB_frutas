@@ -11,7 +11,7 @@ app = Flask(__name__)
 IMG_SIZE = 100
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODELO_ACTIVO = "modelo2"
+MODELO_ACTIVO = "modelo4"
 
 MODEL_PATH = os.path.join(
     BASE_DIR,
@@ -74,7 +74,14 @@ def predecir():
     imagen_bytes = base64.b64decode(imagen_base64)
 
     imagen = Image.open(io.BytesIO(imagen_bytes)).convert("RGB")
-    imagen = imagen.resize((IMG_SIZE, IMG_SIZE))
+    imagen_100 = imagen.resize((100, 100))
+    imagen = imagen_100
+    preview_buffer = io.BytesIO()
+    imagen_100.save(preview_buffer, format="JPEG")
+
+    preview_base64 = base64.b64encode(
+        preview_buffer.getvalue()
+    ).decode("utf-8")
 
     img_array = np.array(imagen)
     img_array = np.expand_dims(img_array, axis=0)
@@ -112,7 +119,10 @@ def predecir():
             "descripcion": info["descripcion"]
         })
 
-    return jsonify({"resultados": resultados})
+    return jsonify({
+    "resultados": resultados,
+    "preview_cnn": f"data:image/jpeg;base64,{preview_base64}"
+    })  
 
 
 if __name__ == "__main__":
